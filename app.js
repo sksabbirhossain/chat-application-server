@@ -21,6 +21,7 @@ mongoose
 
 //route
 app.use("/api/user", userRouter);
+app.use("/api/conversations", conversationRouter);
 
 //listen app
 app.listen(port, () => {
