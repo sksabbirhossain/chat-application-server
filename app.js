@@ -1,17 +1,26 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+
+//
+const userRouter = require("./routes/userRoute");
 
 const app = express();
+app.use(express.json());
 app.use(cors());
 dotenv.config();
 
 const port = process.env.PORT || 5000;
 
+//database connection
+mongoose
+  .connect(process.env.MONGODB_URL)
+  .then(() => console.log("database connection successfully"))
+  .catch((err) => console.log(err));
+
 //route
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
+app.use("/api/user", userRouter);
 
 //listen app
 app.listen(port, () => {
