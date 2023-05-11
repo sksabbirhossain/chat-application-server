@@ -6,8 +6,9 @@ const {
   getConversations,
   addConversation,
 } = require("../controller/conversationController");
+const checkedLogin = require("../middleware/checkedLogin");
 
-router.get("/", getConversations);
-router.post("/add", addConversation);
+router.get("/", checkedLogin, getConversations);
+router.post("/add", checkedLogin, addConversation);
 
 module.exports = router;

@@ -8,6 +8,8 @@ const userRouter = require("./routes/userRoute");
 const conversationRouter = require("./routes/conversationRouter");
 
 const app = express();
+
+//common middlemare
 app.use(express.json());
 app.use(cors());
 dotenv.config();
