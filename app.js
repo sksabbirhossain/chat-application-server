@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 //
 const userRouter = require("./routes/userRoute");
+const conversationRouter = require("./routes/conversationRouter");
 
 const app = express();
 app.use(express.json());
