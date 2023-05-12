@@ -7,10 +7,13 @@ const User = require("../model/userSchema");
 //create a user
 const createUser = async (req, res, next) => {
   try {
-    const { password, ...rest } = req.body;
+    const { password, name, email } = req.body;
+    const { filename } = req.file || null;
     const hashedPassword = await bcrypt.hash(password, 11);
     const user = new User({
-      ...rest,
+      name,
+      email,
+      profilePic: filename,
       password: hashedPassword,
     });
     const userData = await user.save();
@@ -78,7 +81,23 @@ const loginUser = async (req, res, next) => {
   }
 };
 
+//get
+const getAllUser =async (req, res, next) => {
+  try {
+    const user = await User.find({});
+
+    res.json({
+      user: user,
+    });
+  } catch (err) {
+    res.json({
+      status: false,
+    });
+  }
+};
+
 module.exports = {
   createUser,
   loginUser,
+  getAllUser,
 };

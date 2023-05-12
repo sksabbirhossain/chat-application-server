@@ -11,8 +11,12 @@ const app = express();
 
 //common middlemare
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 dotenv.config();
+
+//static folder
+app.use("/uploads", express.static("./uploads/profile"));
 
 const port = process.env.PORT || 5000;
 
@@ -25,6 +29,19 @@ mongoose
 //route
 app.use("/api/user", userRouter);
 app.use("/api/conversations", conversationRouter);
+
+//error handler
+app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    next("There was a problem!");
+  } else {
+    if (err.message) {
+      res.status(500).json(err.message);
+    } else {
+      res.status(500).json("There was an error!");
+    }
+  }
+});
 
 //listen app
 app.listen(port, () => {
